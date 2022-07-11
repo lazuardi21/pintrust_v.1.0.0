@@ -18,7 +18,7 @@ const Dashboard = () => {
     <main className={styles.container}>
       <div className={styles.welcome}>
         <h1>
-          Good afternoon , WebDesign.
+          Good afternoon , Pintrust!!!
           <MdOutlineWavingHand />
         </h1>
         <p>Here is what’s happening with your projects today:</p>
