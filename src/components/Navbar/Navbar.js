@@ -2,11 +2,12 @@
 import styles from "./Navbar.module.scss";
 
 //CONTEXT
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import useState from "react-usestateref";
 import NavContext from "../../Context/NavContext";
 
 //REACT ROUTER
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 //ICONS
 import {
@@ -21,6 +22,7 @@ import { IoMdLogIn } from "react-icons/io";
 import { FaReact, FaTimes } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import { VscDashboard } from "react-icons/vsc";
+
 
 const NavUrl = ({ url, icon, description }) => {
   const { nav, setNav } = useContext(NavContext);
@@ -44,17 +46,47 @@ const NavUrl = ({ url, icon, description }) => {
 
 const Navbar = () => {
   const { nav, setNav } = useContext(NavContext);
+  const navigate = useNavigate()
+  const [isMobile, setIsMobile] = useState(false)
+  const [width, setWidth] = useState(0)
+
+  useEffect(() => {
+    console.log("Hello")
+    console.log(window.innerWidth)
+    setWidth(window.innerWidth)
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize);
+  }, [])
+
+  const handleResize = () => {
+    if (window.innerWidth < 1024) {
+      console.log("mobile window")
+      setIsMobile(true)
+    } 
+    else if(window.innerWidth >= 1024){
+      console.log("desktop window")
+      setIsMobile(false)
+    }
+  }
+
 
   return (
     <div
-      className={`${styles.navbar_container} ${
-        nav ? styles.navbar_mobile_active : undefined
-      }`}
+      // className={`${styles.navbar_container} ${nav ? styles.navbar_mobile_active : undefined
+        className={`${styles.navbar_container} ${!nav ? styles.navbar_mobile_active : undefined
+        }`}
     >
-      <nav className={nav ? undefined : styles.nav_small}>
+      {/* <nav className={nav ? undefined : styles.nav_small}> */}
+      <nav className={!nav ? undefined : styles.nav_small}>
         {/* LOGO */}
         <div className={styles.logo}>
-          <VscDashboard className={styles.logo_icon} />
+          <VscDashboard
+            className={styles.logo_icon}
+            onClick={() => {
+              navigate('/')
+            }}
+          />
           <FaTimes
             className={styles.mobile_cancel_icon}
             onClick={() => {
@@ -67,7 +99,8 @@ const Navbar = () => {
         <ul className={styles.menu_container}>
           {/* FIRST CATEGORY */}
           <span className={styles.categories}>
-            {nav ? "Pages" : <BsThreeDots />}
+            {/* {nav ? "Pages" : <BsThreeDots />} */}
+            {!nav ? "Pages" : <BsThreeDots />}
           </span>
 
           <NavUrl
@@ -95,7 +128,8 @@ const Navbar = () => {
 
           {/* SECOND CATEGORY */}
           <span className={`${styles.categories} ${styles.second_category}`}>
-            {nav ? "More" : <BsThreeDots />}
+          {/* {nav ? "More" : <BsThreeDots />} */}
+            {!nav ? "More" : <BsThreeDots />}
           </span>
 
           <NavUrl
@@ -107,18 +141,19 @@ const Navbar = () => {
         </ul>
 
         {/* LOGOUT BUTTON */}
-        <div
+        {/* <div
           className={`${styles.btn_logout}`}
           onClick={() => {
             setNav(!nav);
           }}
         >
           <MdOutlineLogout />
-        </div>
+        </div> */}
       </nav>
 
       <div
-        className={nav ? styles.mobile_nav_background_active : undefined}
+      // className={nav ? styles.mobile_nav_background_active : undefined}
+        className={!nav ? styles.mobile_nav_background_active : undefined}
         onClick={() => {
           setNav(!nav);
         }}
