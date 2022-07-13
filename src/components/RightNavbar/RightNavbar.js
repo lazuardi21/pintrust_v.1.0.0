@@ -23,7 +23,7 @@ const RightNavbar = () => {
     <div className={styles.container}>
       {/* BURGER */}
       <div
-        className={styles.burger_container}
+        className={styles.topbar_container}
         onClick={() => {
           setNav(!nav);
         }}
