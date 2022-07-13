@@ -14,6 +14,7 @@ function App() {
   const [nav, setNav] = useState(false);
   const value = { nav, setNav };
 
+
   return (
     <div className="App">
       <NavContext.Provider value={value}>

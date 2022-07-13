@@ -47,7 +47,7 @@ const NavUrl = ({ url, icon, description }) => {
 const Navbar = () => {
   const { nav, setNav } = useContext(NavContext);
   const navigate = useNavigate()
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile, isMobileRef] = useState(false)
   const [width, setWidth] = useState(0)
 
   useEffect(() => {
@@ -74,11 +74,19 @@ const Navbar = () => {
   return (
     <div
       // className={`${styles.navbar_container} ${nav ? styles.navbar_mobile_active : undefined
-        className={`${styles.navbar_container} ${!nav ? styles.navbar_mobile_active : undefined
+        className={`${styles.navbar_container} ${
+          !isMobileRef.current? 
+          !nav ? styles.navbar_mobile_active : undefined :
+          nav ? styles.navbar_mobile_active : undefined
         }`}
     >
       {/* <nav className={nav ? undefined : styles.nav_small}> */}
-      <nav className={!nav ? undefined : styles.nav_small}>
+      <nav className={
+        !isMobileRef.current?
+        !nav ? undefined : styles.nav_small :
+        nav ? undefined : styles.nav_small
+      }
+        >
         {/* LOGO */}
         <div className={styles.logo}>
           <VscDashboard
@@ -100,7 +108,11 @@ const Navbar = () => {
           {/* FIRST CATEGORY */}
           <span className={styles.categories}>
             {/* {nav ? "Pages" : <BsThreeDots />} */}
-            {!nav ? "Pages" : <BsThreeDots />}
+            {
+              !isMobileRef.current?
+            !nav ? "Pages" : <BsThreeDots /> :
+            nav ? "Pages" : <BsThreeDots />
+            }
           </span>
 
           <NavUrl
@@ -129,7 +141,12 @@ const Navbar = () => {
           {/* SECOND CATEGORY */}
           <span className={`${styles.categories} ${styles.second_category}`}>
           {/* {nav ? "More" : <BsThreeDots />} */}
-            {!nav ? "More" : <BsThreeDots />}
+            {
+            !isMobileRef.current?
+            !nav ? "More" : <BsThreeDots/> :
+            nav ? "More" : <BsThreeDots/> 
+            
+            }
           </span>
 
           <NavUrl
@@ -153,7 +170,11 @@ const Navbar = () => {
 
       <div
       // className={nav ? styles.mobile_nav_background_active : undefined}
-        className={!nav ? styles.mobile_nav_background_active : undefined}
+        className={
+          !isMobileRef.current?
+          !nav ? styles.mobile_nav_background_active : undefined :
+          nav ? styles.mobile_nav_background_active : undefined
+        }
         onClick={() => {
           setNav(!nav);
         }}
