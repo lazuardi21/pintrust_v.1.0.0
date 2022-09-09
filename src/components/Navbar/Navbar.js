@@ -20,8 +20,9 @@ import {
 } from "react-icons/md";
 import { IoMdLogIn } from "react-icons/io";
 import { FaReact, FaTimes } from "react-icons/fa";
-import { BsThreeDots } from "react-icons/bs";
+import { BsDashLg } from "react-icons/bs";
 import { VscDashboard } from "react-icons/vsc";
+
 
 
 const NavUrl = ({ url, icon, description }) => {
@@ -47,13 +48,13 @@ const NavUrl = ({ url, icon, description }) => {
 const Navbar = () => {
   const { nav, setNav } = useContext(NavContext);
   const navigate = useNavigate()
-  const [isMobile, setIsMobile, isMobileRef] = useState(false)
-  const [width, setWidth] = useState(0)
+  const [, setIsMobile, isMobileRef] = useState(false)
+  // const [width, setWidth] = useState(0)
 
   useEffect(() => {
     console.log("Hello")
-    console.log(window.innerWidth)
-    setWidth(window.innerWidth)
+    // console.log(window.innerWidth)
+    // setWidth(window.innerWidth)
     handleResize()
     window.addEventListener("resize", handleResize)
     return () => window.removeEventListener("resize", handleResize);
@@ -63,8 +64,8 @@ const Navbar = () => {
     if (window.innerWidth < 1024) {
       console.log("mobile window")
       setIsMobile(true)
-    } 
-    else if(window.innerWidth >= 1024){
+    }
+    else if (window.innerWidth >= 1024) {
       console.log("desktop window")
       setIsMobile(false)
     }
@@ -74,27 +75,28 @@ const Navbar = () => {
   return (
     <div
       // className={`${styles.navbar_container} ${nav ? styles.navbar_mobile_active : undefined
-        className={`${styles.navbar_container} ${
-          !isMobileRef.current? 
-          !nav ? styles.navbar_mobile_active : undefined :
-          nav ? styles.navbar_mobile_active : undefined
+      className={`${styles.navbar_container} ${!isMobileRef.current ?
+        !nav ? styles.navbar_mobile_active : undefined :
+        nav ? styles.navbar_mobile_active : undefined
         }`}
     >
       {/* <nav className={nav ? undefined : styles.nav_small}> */}
       <nav className={
-        !isMobileRef.current?
-        !nav ? undefined : styles.nav_small :
-        nav ? undefined : styles.nav_small
+        !isMobileRef.current ?
+          !nav ? undefined : styles.nav_small :
+          nav ? undefined : styles.nav_small
       }
-        >
+      >
         {/* LOGO */}
         <div className={styles.logo}>
           <VscDashboard
             className={styles.logo_icon}
             onClick={() => {
               navigate('/')
+              window.location.reload()
             }}
           />
+         
           <FaTimes
             className={styles.mobile_cancel_icon}
             onClick={() => {
@@ -107,11 +109,11 @@ const Navbar = () => {
         <ul className={styles.menu_container}>
           {/* FIRST CATEGORY */}
           <span className={styles.categories}>
-            {/* {nav ? "Pages" : <BsThreeDots />} */}
+            {/* {nav ? "Pages" : <BsDashLg />} */}
             {
-              !isMobileRef.current?
-            !nav ? "Pages" : <BsThreeDots /> :
-            nav ? "Pages" : <BsThreeDots />
+              !isMobileRef.current ?
+                !nav ? "Pages" : <BsDashLg /> :
+                nav ? "Pages" : <BsDashLg />
             }
           </span>
 
@@ -140,12 +142,12 @@ const Navbar = () => {
 
           {/* SECOND CATEGORY */}
           <span className={`${styles.categories} ${styles.second_category}`}>
-          {/* {nav ? "More" : <BsThreeDots />} */}
+            {/* {nav ? "More" : <BsDashLg />} */}
             {
-            !isMobileRef.current?
-            !nav ? "More" : <BsThreeDots/> :
-            nav ? "More" : <BsThreeDots/> 
-            
+              !isMobileRef.current ?
+                !nav ? "More" : <BsDashLg /> :
+                nav ? "More" : <BsDashLg />
+
             }
           </span>
 
@@ -169,11 +171,11 @@ const Navbar = () => {
       </nav>
 
       <div
-      // className={nav ? styles.mobile_nav_background_active : undefined}
+        // className={nav ? styles.mobile_nav_background_active : undefined}
         className={
-          !isMobileRef.current?
-          !nav ? styles.mobile_nav_background_active : undefined :
-          nav ? styles.mobile_nav_background_active : undefined
+          !isMobileRef.current ?
+            !nav ? styles.mobile_nav_background_active : undefined :
+            nav ? styles.mobile_nav_background_active : undefined
         }
         onClick={() => {
           setNav(!nav);
